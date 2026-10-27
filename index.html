@@ -1,12 +1,48 @@
-<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Add Iris</title>
-<script>
-if(/Snapchat|FBAN|FBAV|Instagram/i.test(navigator.userAgent)||(/iPhone|iPad/.test(navigator.userAgent)&&!/Safari\//.test(navigator.userAgent))){
-  location.href="x-safari-https://barongartner.github.io/iris-card/";
-}
-</script>
-<body style="font-family:-apple-system,sans-serif;text-align:center;padding:48px 24px;background:#111;color:#fff">
-<img src="photo.jpg" style="width:160px;height:160px;border-radius:50%;object-fit:cover">
+<meta property="og:title" content="Iris">
+<meta property="og:description" content="Tap to add Iris to your contacts">
+<meta property="og:image" content="https://barongartner.github.io/iris-card/photo.jpg">
+<style>
+  body { font-family: -apple-system, system-ui, sans-serif; text-align: center; padding: 56px 24px; margin: 0; background: #111; color: #fff; }
+  img { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; }
+  h1 { margin: 20px 0 28px; font-size: 34px; }
+  a.btn { display: inline-block; padding: 18px 36px; border-radius: 16px; background: #0a84ff; color: #fff; font-size: 20px; font-weight: 600; text-decoration: none; }
+  p { color: #888; margin-top: 28px; font-size: 15px; line-height: 1.4; }
+  .hide { display: none; }
+</style>
+</head>
+<body>
+<img src="photo.jpg" alt="">
 <h1>Iris</h1>
-<a href="x-safari-https://barongartner.github.io/iris-card/card/Iris.vcf" style="display:inline-block;margin-top:16px;padding:16px 32px;border-radius:14px;background:#0a84ff;color:#fff;font-size:20px;text-decoration:none">Add to Contacts</a>
-<p style="color:#888;margin-top:32px">Opening from Snapchat and it shows text? Tap the compass or share icon and open in Safari.</p>
+
+<!-- In Safari: a plain link to the card opens the iOS add-contact sheet. -->
+<div id="safari">
+  <a class="btn" href="card/Iris.vcf">Add to Contacts</a>
+</div>
+
+<!-- Inside Snapchat, Instagram etc: their browser shows a .vcf as raw text,
+     so the only job here is getting into Safari. A tap is more likely to be
+     allowed through than the automatic jump. -->
+<div id="inapp" class="hide">
+  <a class="btn" href="x-safari-https://barongartner.github.io/iris-card/">Open in Safari</a>
+  <p>Then tap Add to Contacts.<br>If nothing happens, tap the ... menu and pick Open in Safari.</p>
+</div>
+
+<script>
+  var ua = navigator.userAgent;
+  var ios = /iPhone|iPad|iPod/.test(ua);
+  var inApp = /Snapchat|FBAN|FBAV|Instagram|TikTok|musical_ly|Twitter|LinkedInApp/i.test(ua) ||
+              (ios && !/Safari\//.test(ua));
+  if (inApp) {
+    document.getElementById('safari').className = 'hide';
+    document.getElementById('inapp').className = '';
+    if (ios) location.href = 'x-safari-https://barongartner.github.io/iris-card/';
+  }
+</script>
+</body>
+</html>
