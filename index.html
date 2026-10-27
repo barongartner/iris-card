@@ -3,16 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Add Iris</title>
+<title>Iris</title>
 <meta property="og:title" content="Iris">
-<meta property="og:description" content="Tap to add Iris to your contacts">
 <meta property="og:image" content="https://barongartner.github.io/iris-card/photo.jpg">
 <style>
   body { font-family: -apple-system, system-ui, sans-serif; text-align: center; padding: 56px 24px; margin: 0; background: #111; color: #fff; }
   img { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; }
   h1 { margin: 20px 0 28px; font-size: 34px; }
   a.btn { display: inline-block; padding: 18px 36px; border-radius: 16px; background: #0a84ff; color: #fff; font-size: 20px; font-weight: 600; text-decoration: none; }
-  p { color: #888; margin-top: 28px; font-size: 15px; line-height: 1.4; }
+  ol { display: inline-block; text-align: left; margin: 0; padding-left: 24px; font-size: 18px; line-height: 1.8; color: #ddd; }
   .hide { display: none; }
 </style>
 </head>
@@ -20,22 +19,20 @@
 <img src="photo.jpg" alt="">
 <h1>Iris</h1>
 
-<!-- In Safari: a plain link to the card opens the iOS add-contact sheet. -->
+<!-- Safari: a plain link to the card opens the iOS add-contact sheet. -->
 <div id="safari">
   <a class="btn" href="card/Iris.vcf">Add to Contacts</a>
 </div>
 
-<!-- Inside Snapchat, Instagram etc: their browser shows a .vcf as raw text,
-     so the only job here is getting into Safari. Snapchat on iPhone blocks the
-     x-safari-https scheme (github.com/shalanah/inapp-debugger), but its http
-     sibling is the form Snap let through for Chrome, so that's the one used.
-     It points at this page with ?go=1, never at the .vcf: if an app swallows
-     the jump and loads it in place, you land back here, not on a wall of text,
-     No automatic jump on load: in Snapchat that gives a blank white page
-     (Baron, 2026-10-26), so the jump only happens when he taps the button. -->
+<!-- Snapchat, Instagram etc: their browsers show a .vcf as raw text and block
+     every jump to Safari (on load it gives a blank white page), so the page
+     stays put and says what to tap. -->
 <div id="inapp" class="hide">
-  <a class="btn" href="x-safari-http://barongartner.github.io/iris-card/?go=1">Add to Contacts</a>
-  <p>Opens Safari, then the add-contact sheet.<br>If nothing happens, tap the ... menu and pick Open in Safari.</p>
+  <ol>
+    <li>Tap the ... menu</li>
+    <li>Tap Open in Safari</li>
+    <li>Tap Add to Contacts</li>
+  </ol>
 </div>
 
 <script>
@@ -43,13 +40,9 @@
   var ios = /iPhone|iPad|iPod/.test(ua);
   var inApp = /Snapchat|FBAN|FBAV|Instagram|TikTok|musical_ly|Twitter|LinkedInApp/i.test(ua) ||
               (ios && !/Safari\//.test(ua));
-  var jumped = /[?&]go=1/.test(location.search);
   if (inApp) {
     document.getElementById('safari').className = 'hide';
     document.getElementById('inapp').className = '';
-  } else if (ios) {
-    // Real Safari: straight to the card, so the link is one tap from anywhere
-    location.replace('card/Iris.vcf');
   }
 </script>
 </body>
