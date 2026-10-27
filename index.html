@@ -31,7 +31,8 @@
      sibling is the form Snap let through for Chrome, so that's the one used.
      It points at this page with ?go=1, never at the .vcf: if an app swallows
      the jump and loads it in place, you land back here, not on a wall of text,
-     and ?go=1 stops the automatic jump from looping. -->
+     No automatic jump on load: in Snapchat that gives a blank white page
+     (Baron, 2026-10-26), so the jump only happens when he taps the button. -->
 <div id="inapp" class="hide">
   <a class="btn" href="x-safari-http://barongartner.github.io/iris-card/?go=1">Add to Contacts</a>
   <p>Opens Safari, then the add-contact sheet.<br>If nothing happens, tap the ... menu and pick Open in Safari.</p>
@@ -46,7 +47,6 @@
   if (inApp) {
     document.getElementById('safari').className = 'hide';
     document.getElementById('inapp').className = '';
-    if (ios && !jumped) location.href = 'x-safari-http://barongartner.github.io/iris-card/?go=1';
   } else if (ios) {
     // Real Safari: straight to the card, so the link is one tap from anywhere
     location.replace('card/Iris.vcf');
